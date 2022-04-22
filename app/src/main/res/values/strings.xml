@@ -16,4 +16,8 @@
     <string name="football">Футбол турнир</string>
     <string name="football_info">Турнир по футболу во вторник</string>
     <string name="football_date">02.05.2022</string>
+    <string name="add_note">Добавить заметку</string>
+    <string name="add_note_title">Заголовок</string>
+    <string name="add_note_description">Описание заметки</string>
+    <string name="save_note">Сохранить</string>
 </resources>

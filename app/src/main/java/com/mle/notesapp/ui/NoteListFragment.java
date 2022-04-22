@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.button.MaterialButton;
 import com.mle.notesapp.R;
 import com.mle.notesapp.domain.InMemoryNoteRepository;
 import com.mle.notesapp.domain.Note;
@@ -33,6 +34,18 @@ public class NoteListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        MaterialButton btnAddNote = view.findViewById(R.id.btnAddNote);
+        btnAddNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getParentFragmentManager()
+                        .beginTransaction()
+                        .addToBackStack("addNote")
+                        .replace(R.id.fragment_container, new NoteAddFragment())
+                        .commit();
+            }
+        });
+
         List<Note> notes = InMemoryNoteRepository.getInstance(requireContext()).getAll();
 
         LinearLayout container = view.findViewById(R.id.container);
@@ -44,16 +57,11 @@ public class NoteListFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
 
-                    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                        Bundle bundle = new Bundle();
-                        bundle.putParcelable(SELECTED_NOTE, note);
-                        getParentFragmentManager()
-                                .setFragmentResult(NOTES_CLICKED_KEY, bundle);
-                    } else {
-                        NoteDetailsActivity.show(requireContext(), note);
-
-                    }
-
+                    getParentFragmentManager()
+                            .beginTransaction()
+                            .addToBackStack("details")
+                            .replace(R.id.fragment_container, NoteDetailsFragment.newInstance(note))
+                            .commit();
                 }
             });
 

@@ -3,12 +3,14 @@ package com.mle.notesapp.ui;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.mle.notesapp.R;
 import com.mle.notesapp.domain.Note;
 
@@ -40,6 +42,15 @@ public class NoteDetailsFragment extends Fragment {
         title = view.findViewById(R.id.note_title);
         date = view.findViewById(R.id.note_date);
         description = view.findViewById(R.id.note_description);
+
+        MaterialToolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getParentFragmentManager()
+                        .popBackStack();
+            }
+        });
 
         getParentFragmentManager().setFragmentResultListener(NoteListFragment.NOTES_CLICKED_KEY, getViewLifecycleOwner(), new FragmentResultListener() {
             @Override

@@ -30,4 +30,8 @@
     <string name="language">Смена языка</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+    <string name="save_settings">Сохранить</string>
+    <string name="notifications">Notifications</string>
+    <string name="close_app">CLOSE APP</string>
+    <string name="close_app_dialog_title">Do you want to close app?</string>
 </resources>

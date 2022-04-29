@@ -10,10 +10,18 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/add_note"
+        android:icon="@drawable/ic_baseline_note_add_24"
+        android:iconTint="@color/white"
+        android:title="@string/add_note"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/action_info"
         android:icon="@drawable/ic_baseline_info_24"
         android:iconTint="@color/white"
         android:title="@string/action_info"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
+
 
 </menu>

@@ -33,12 +33,13 @@
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnAddNote"
-        android:layout_width="match_parent"
+        android:id="@+id/btnClose"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:text="@string/add_note">
+        android:layout_gravity="bottom|center"
+        android:text="@string/close_app">
 
     </com.google.android.material.button.MaterialButton>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

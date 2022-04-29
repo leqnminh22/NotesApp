@@ -14,6 +14,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.mle.notesapp.R;
 import com.mle.notesapp.domain.InMemorySettingsRepository;
 import com.mle.notesapp.domain.Setting;
@@ -32,7 +34,7 @@ public class NoteSettingsFragment extends Fragment {
 
         MaterialToolbar toolbar = view.findViewById(R.id.toolbar);
 
-        if(requireActivity() instanceof ToolbarHandler) {
+        if (requireActivity() instanceof ToolbarHandler) {
             ((ToolbarHandler) requireActivity()).setToolBar(toolbar);
         }
 
@@ -77,6 +79,20 @@ public class NoteSettingsFragment extends Fragment {
             stsContainer.addView(itemSetting);
         }
 
-
+        MaterialButton btnSaveSettings = view.findViewById(R.id.btnSaveSettings);
+        btnSaveSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "SAVE", Snackbar.LENGTH_LONG)
+                        .setAction("OK", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(requireContext(), "SAVED", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .show();
+            }
+        });
     }
+
 }

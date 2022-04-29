@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
@@ -37,9 +38,21 @@ public class NoteListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        getParentFragmentManager()
+                .setFragmentResultListener(CloseDialogFragment.RESULT_KEY, getViewLifecycleOwner(), new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                        String message = result.getString(CloseDialogFragment.MESSAGE);
+
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+
         MaterialToolbar toolbar = view.findViewById(R.id.toolbar);
 
-        if(requireActivity() instanceof ToolbarHandler) {
+        if (requireActivity() instanceof ToolbarHandler) {
             ((ToolbarHandler) requireActivity()).setToolBar(toolbar);
         }
 
@@ -48,6 +61,7 @@ public class NoteListFragment extends Fragment {
             public boolean onMenuItemClick(MenuItem item) {
 
                 switch (item.getItemId()) {
+
                     case R.id.action_info:
                         Toast.makeText(requireContext(), "info", Toast.LENGTH_SHORT).show();
                         return true;
@@ -55,21 +69,26 @@ public class NoteListFragment extends Fragment {
                     case R.id.action_search:
                         Toast.makeText(requireContext(), "search", Toast.LENGTH_SHORT).show();
                         return true;
+
+                    case R.id.add_note:
+                        getParentFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragment_container, new NoteAddFragment())
+                                .commit();
+                        return true;
                 }
                 return false;
             }
         });
 
 
-        MaterialButton btnAddNote = view.findViewById(R.id.btnAddNote);
-        btnAddNote.setOnClickListener(new View.OnClickListener() {
+        MaterialButton btnClose = view.findViewById(R.id.btnClose);
+        btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getParentFragmentManager()
-                        .beginTransaction()
-                        .addToBackStack("addNote")
-                        .replace(R.id.fragment_container, new NoteAddFragment())
-                        .commit();
+                CloseDialogFragment.newInstance("Type \"Close\" to confirm closing app")
+                        .show(getParentFragmentManager(), "");
+
             }
         });
 

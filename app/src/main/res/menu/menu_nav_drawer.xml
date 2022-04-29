@@ -12,4 +12,5 @@
         android:id="@+id/add_note"
         android:title="@string/add_note"/>
 
+
 </menu>

@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity implements ToolbarHandler {
                                 .replace(R.id.fragment_container, new NoteAddFragment())
                                 .commit();
                         drawerLayout.close();
-
                         return true;
+
                 }
                 return false;
             }

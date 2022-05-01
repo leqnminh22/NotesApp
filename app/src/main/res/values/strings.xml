@@ -12,7 +12,7 @@
     <string name="interview">Интеврью</string>
     <string name="interview_info">Собеседование на работу</string>
     <string name="interview_date">24.04.2022</string>
-    <string name="note_title">Notes</string>
+    <string name="note_title">Заметки</string>
     <string name="football">Футбол турнир</string>
     <string name="football_info">Турнир по футболу во вторник</string>
     <string name="football_date">02.05.2022</string>
@@ -20,4 +20,14 @@
     <string name="add_note_title">Заголовок</string>
     <string name="add_note_description">Описание заметки</string>
     <string name="save_note">Сохранить</string>
+    <string name="action_info">Info</string>
+    <string name="action_search">Поиск</string>
+    <string name="action_share">Поделиться</string>
+    <string name="action_photo">Share photo</string>
+    <string name="settings">Настройки</string>
+    <string name="about">Developers</string>
+    <string name="font_size">Размер шрифта</string>
+    <string name="language">Смена языка</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
 </resources>

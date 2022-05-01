@@ -34,4 +34,6 @@
     <string name="notifications">Notifications</string>
     <string name="close_app">CLOSE APP</string>
     <string name="close_app_dialog_title">Do you want to close app?</string>
+    <string name="save_action">SAVED</string>
+    <string name="ok">OK</string>
 </resources>

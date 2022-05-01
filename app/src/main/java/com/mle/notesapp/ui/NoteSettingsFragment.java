@@ -83,8 +83,8 @@ public class NoteSettingsFragment extends Fragment {
         btnSaveSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "SAVE", Snackbar.LENGTH_LONG)
-                        .setAction("OK", new View.OnClickListener() {
+                Snackbar.make(view, getResources().getString(R.string.save_action), Snackbar.LENGTH_LONG)
+                        .setAction(getString(R.string.ok), new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 Toast.makeText(requireContext(), "SAVED", Toast.LENGTH_SHORT).show();

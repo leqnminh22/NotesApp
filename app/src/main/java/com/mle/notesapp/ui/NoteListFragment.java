@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,6 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
@@ -27,6 +27,7 @@ public class NoteListFragment extends Fragment {
 
     public static final String NOTES_CLICKED_KEY = "NOTES_CLICKED_KEY";
     public static final String SELECTED_NOTE = "SELECTED_NOTE";
+
 
     @Nullable
     @Override
@@ -47,7 +48,6 @@ public class NoteListFragment extends Fragment {
                         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
                     }
                 });
-
 
 
         MaterialToolbar toolbar = view.findViewById(R.id.toolbar);
@@ -94,32 +94,27 @@ public class NoteListFragment extends Fragment {
 
         List<Note> notes = InMemoryNoteRepository.getInstance(requireContext()).getAll();
 
-        LinearLayout container = view.findViewById(R.id.container);
+        RecyclerView notesList = view.findViewById(R.id.notes_list);
 
-        for (Note note : notes) {
-            View itemView = getLayoutInflater().inflate(R.layout.item_note, container, false);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
+        notesList.setLayoutManager(layoutManager);
 
-            itemView.findViewById(R.id.root).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        NotesAdapter adapter = new NotesAdapter();
+        adapter.setNoteClicked(new NotesAdapter.OnNoteClicked() {
+            @Override
+            public void onNoteClicked(Note note) {
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, NoteDetailsFragment.newInstance(note))
+                        .addToBackStack("")
+                        .commit();
+            }
+        });
+        notesList.setAdapter(adapter); // выставляем в recycler view
 
-                    getParentFragmentManager()
-                            .beginTransaction()
-                            .addToBackStack("details")
-                            .replace(R.id.fragment_container, NoteDetailsFragment.newInstance(note))
-                            .commit();
-                }
-            });
-
-            TextView title = itemView.findViewById(R.id.note_title);
-            title.setText(note.getName());
-
-            TextView date = itemView.findViewById(R.id.note_date);
-            date.setText(note.getDate());
-
-            container.addView(itemView);
+        adapter.setData(notes); // передаем список заметок адаптеру
+        adapter.notifyDataSetChanged(); // Recycler view перерисовывает список
 
 
-        }
     }
 }
+

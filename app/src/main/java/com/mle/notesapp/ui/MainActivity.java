@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.mle.notesapp.R;
 
@@ -22,10 +24,14 @@ public class MainActivity extends AppCompatActivity implements ToolbarHandler {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if(savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new NoteListFragment())
+                    .commit();
+        }
+
 
         drawerLayout = findViewById(R.id.drawer_bar);
-
-
         NavigationView navigationView = findViewById(R.id.navigation_bar);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -51,6 +57,27 @@ public class MainActivity extends AppCompatActivity implements ToolbarHandler {
                         drawerLayout.close();
                         return true;
 
+                }
+                return false;
+            }
+        });
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_notes:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, new NoteListFragment())
+                                .commit();
+                        return true;
+
+                    case R.id.action_info:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, new NoteInfoFragment())
+                                .commit();
+                        return true;
                 }
                 return false;
             }

@@ -3,23 +3,29 @@ package com.mle.notesapp.domain;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Date;
+
 public class Note implements Parcelable {
+
 
     private String name;
     private String description;
-    private String date;
+    private Date date;
+    private String id;
 
 
-    public Note(String name, String description, String date) {
+    public Note(String id, String name, String description, Date date) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.date = date;
     }
 
+
     protected Note(Parcel in) {
         name = in.readString();
         description = in.readString();
-        date = in.readString();
+        id = in.readString();
     }
 
     public static final Creator<Note> CREATOR = new Creator<Note>() {
@@ -34,6 +40,10 @@ public class Note implements Parcelable {
         }
     };
 
+    public String getId() {
+        return id;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -42,9 +52,10 @@ public class Note implements Parcelable {
         return name;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
+
 
     @Override
     public int describeContents() {
@@ -55,6 +66,6 @@ public class Note implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(name);
         parcel.writeString(description);
-        parcel.writeString(date);
+        parcel.writeString(id);
     }
 }

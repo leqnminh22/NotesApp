@@ -16,12 +16,16 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.mle.notesapp.R;
 import com.mle.notesapp.domain.Note;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 public class NoteDetailsFragment extends Fragment {
 
     private static final String ARG_NOTE = "ARG_NOTE";
     private TextView title;
     private TextView date;
     private TextView description;
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM, HH:mm", Locale.getDefault());
 
     public NoteDetailsFragment() {
         super(R.layout.fragment_note_details);
@@ -93,6 +97,6 @@ public class NoteDetailsFragment extends Fragment {
     public void showNote(Note note) {
         title.setText(note.getName());
         description.setText(note.getDescription());
-        date.setText(note.getDate());
+        date.setText(simpleDateFormat.format(note.getDate()));
     }
 }

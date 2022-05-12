@@ -79,11 +79,59 @@ public class InMemoryNoteRepository implements NotesRepository {
                         callback.onSuccess(note);
                     }
                 });
-
-
             }
+        });
+    }
 
+    @Override
+    public void remove(Note note, Callback<Note> callback) {
 
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000L);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                data.remove(note);
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onSuccess(null);
+                    }
+                });
+            }
+        });
+
+    }
+
+    @Override
+    public void update(Note note, String title, String message, Callback<Note> callback) {
+
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000L);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                Note newNote = new Note(note.getId(), title, message, note.getDate());
+
+                int index = data.indexOf(note);
+                data.set(index, newNote);
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onSuccess(newNote);
+                    }
+                });
+            }
         });
 
     }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.mle.notesapp.R;
+import com.mle.notesapp.domain.Callback;
 import com.mle.notesapp.domain.InMemoryNoteRepository;
 import com.mle.notesapp.domain.Note;
 
@@ -27,6 +29,7 @@ public class NoteListFragment extends Fragment {
 
     public static final String NOTES_CLICKED_KEY = "NOTES_CLICKED_KEY";
     public static final String SELECTED_NOTE = "SELECTED_NOTE";
+    private ProgressBar progressBar;
 
 
     @Nullable
@@ -82,17 +85,15 @@ public class NoteListFragment extends Fragment {
         });
 
 
-        MaterialButton btnClose = view.findViewById(R.id.btnClose);
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CloseDialogFragment.newInstance("Type \"Close\" to confirm closing app")
-                        .show(getParentFragmentManager(), "");
-
-            }
-        });
-
-        List<Note> notes = InMemoryNoteRepository.getInstance(requireContext()).getAll();
+//        MaterialButton btnClose = view.findViewById(R.id.btnClose);
+//        btnClose.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                CloseDialogFragment.newInstance("Type \"Close\" to confirm closing app")
+//                        .show(getParentFragmentManager(), "");
+//
+//            }
+//        });
 
         RecyclerView notesList = view.findViewById(R.id.notes_list);
 
@@ -111,8 +112,55 @@ public class NoteListFragment extends Fragment {
         });
         notesList.setAdapter(adapter); // выставляем в recycler view
 
-        adapter.setData(notes); // передаем список заметок адаптеру
-        adapter.notifyDataSetChanged(); // Recycler view перерисовывает список
+        progressBar = view.findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.VISIBLE);
+
+        getParentFragmentManager()
+                .setFragmentResultListener(AddNoteBottomSheetDialogFragment.KEY_RESULT, getViewLifecycleOwner(), new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                       Note note = result.getParcelable(AddNoteBottomSheetDialogFragment.ARG_NOTE);
+
+                       int index = adapter.addNote(note);
+
+                       adapter.notifyItemInserted(index);
+
+                       notesList.smoothScrollToPosition(index);
+
+                    }
+                });
+
+        view.findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new AddNoteBottomSheetDialogFragment()
+                        .show(getParentFragmentManager(), "AddNote");
+
+            }
+        });
+
+        InMemoryNoteRepository.getInstance(requireContext()).getAll(new Callback<List<Note>>() {
+            @Override
+            public void onSuccess(List<Note> data) {
+                adapter.setData(data); // передаем список заметок адаптеру
+                adapter.notifyDataSetChanged(); // Recycler view перерисовывает список
+
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(Throwable exception) {
+
+                progressBar.setVisibility(View.GONE);
+
+            }
+        });
+
+
+
+
+
 
 
     }

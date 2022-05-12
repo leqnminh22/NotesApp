@@ -24,15 +24,29 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:id="@+id/btnClose"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom|center"-->
+<!--        android:text="@string/close_app">-->
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnClose"
+<!--    </com.google.android.material.button.MaterialButton>-->
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:text="@string/close_app">
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
-    </com.google.android.material.button.MaterialButton>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_baseline_add_24"/>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

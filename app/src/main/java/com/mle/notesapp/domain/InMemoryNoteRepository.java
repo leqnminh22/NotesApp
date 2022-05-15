@@ -117,7 +117,7 @@ public class InMemoryNoteRepository implements NotesRepository {
                     e.printStackTrace();
                 }
 
-                Note newNote = new Note(note.getId(), title, message, note.getDate());
+                Note newNote = new Note(note.getId(), title, message, note.getCreatedAt());
 
                 int index = data.indexOf(note);
                 data.set(index, newNote);

@@ -36,4 +36,6 @@
     <string name="close_app_dialog_title">Do you want to close app?</string>
     <string name="save_action">SAVED</string>
     <string name="ok">OK</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

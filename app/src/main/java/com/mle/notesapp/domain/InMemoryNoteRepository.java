@@ -24,11 +24,8 @@ public class InMemoryNoteRepository implements NotesRepository {
         this.context = context;
     }
 
-    public static InMemoryNoteRepository getInstance(Context context) {
-        if (INSTANCE == null) {
-            INSTANCE = new InMemoryNoteRepository(context);
-        }
-        return INSTANCE;
+    public InMemoryNoteRepository()  {
+
     }
 
 

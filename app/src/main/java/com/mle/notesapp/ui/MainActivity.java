@@ -8,7 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentResultListener;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -24,10 +26,19 @@ public class MainActivity extends AppCompatActivity implements ToolbarHandler {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportFragmentManager().setFragmentResultListener(AuthFragment.KEY_RESULT_AUTH, this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                showNotes();
+            }
+        });
+
         if(savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new NoteListFragment())
-                    .commit();
+            if (isAuthorized()) {
+                showNotes();
+            } else {
+                showAuth();
+            }
         }
 
 
@@ -68,9 +79,11 @@ public class MainActivity extends AppCompatActivity implements ToolbarHandler {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_notes:
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, new NoteListFragment())
-                                .commit();
+                        if (isAuthorized()) {
+                            showNotes();
+                        } else {
+                            showAuth();
+                        }
                         return true;
 
                     case R.id.action_info:
@@ -92,5 +105,21 @@ public class MainActivity extends AppCompatActivity implements ToolbarHandler {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
+    }
+
+    private void showNotes() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new NoteListFragment())
+                .commit();
+    }
+
+    private void showAuth() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new AuthFragment())
+                .commit();
+    }
+
+    private boolean isAuthorized() {
+        return GoogleSignIn.getLastSignedInAccount(this) != null;
     }
 }

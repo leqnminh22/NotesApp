@@ -57,7 +57,7 @@ public class SharedPrefNotesRepository implements NotesRepository{
     }
 
     @Override
-    public void remove(Note note, Callback<Note> callback) {
+    public void remove(Note note, Callback<Void> callback) {
 
     }
 

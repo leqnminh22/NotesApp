@@ -81,7 +81,7 @@ public class InMemoryNoteRepository implements NotesRepository {
     }
 
     @Override
-    public void remove(Note note, Callback<Note> callback) {
+    public void remove(Note note, Callback<Void> callback) {
 
         executor.execute(new Runnable() {
             @Override
@@ -117,7 +117,7 @@ public class InMemoryNoteRepository implements NotesRepository {
                     e.printStackTrace();
                 }
 
-                Note newNote = new Note(note.getId(), title, message, note.getDate());
+                Note newNote = new Note(note.getId(), title, message, note.getCreatedAt());
 
                 int index = data.indexOf(note);
                 data.set(index, newNote);

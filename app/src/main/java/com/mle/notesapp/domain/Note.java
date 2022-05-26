@@ -11,15 +11,15 @@ public class Note implements Parcelable {
 
     private String name;
     private String description;
-    private Date date;
+    private Date createdAt;
     private String id;
 
 
-    public Note(String id, String name, String description, Date date) {
+    public Note(String id, String name, String description, Date createdAt) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.date = date;
+        this.createdAt = createdAt;
     }
 
 
@@ -53,8 +53,8 @@ public class Note implements Parcelable {
         return name;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
 
@@ -75,11 +75,11 @@ public class Note implements Parcelable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Note note = (Note) o;
-        return Objects.equals(name, note.name) && Objects.equals(description, note.description) && Objects.equals(date, note.date) && Objects.equals(id, note.id);
+        return Objects.equals(name, note.name) && Objects.equals(description, note.description) && Objects.equals(createdAt, note.createdAt) && Objects.equals(id, note.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, date, id);
+        return Objects.hash(name, description, createdAt, id);
     }
 }

@@ -14,7 +14,6 @@ import com.google.android.material.button.MaterialButton;
 import com.mle.notesapp.R;
 import com.mle.notesapp.dependency.Dependencies;
 import com.mle.notesapp.domain.Callback;
-import com.mle.notesapp.domain.InMemoryNoteRepository;
 import com.mle.notesapp.domain.Note;
 
 public class AddNoteBottomSheetDialogFragment extends BottomSheetDialogFragment {
@@ -72,7 +71,7 @@ public class AddNoteBottomSheetDialogFragment extends BottomSheetDialogFragment 
 
                 if (finalNoteToEdit != null) {
 
-                    Dependencies.getNotesRepository(requireContext()).update(finalNoteToEdit, title.getText().toString(), message.getText().toString(), new Callback<Note>() {
+                    Dependencies.getNotesRepository().update(finalNoteToEdit, title.getText().toString(), message.getText().toString(), new Callback<Note>() {
                         @Override
                         public void onSuccess(Note data) {
 
@@ -96,7 +95,7 @@ public class AddNoteBottomSheetDialogFragment extends BottomSheetDialogFragment 
 
                 } else {
 
-                    Dependencies.getNotesRepository(requireContext()).add(title.getText().toString(), message.getText().toString(), new Callback<Note>() {
+                    Dependencies.getNotesRepository().add(title.getText().toString(), message.getText().toString(), new Callback<Note>() {
                         @Override
                         public void onSuccess(Note data) {
 

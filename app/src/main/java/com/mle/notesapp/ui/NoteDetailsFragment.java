@@ -97,6 +97,6 @@ public class NoteDetailsFragment extends Fragment {
     public void showNote(Note note) {
         title.setText(note.getName());
         description.setText(note.getDescription());
-        date.setText(simpleDateFormat.format(note.getDate()));
+        date.setText(simpleDateFormat.format(note.getCreatedAt()));
     }
 }

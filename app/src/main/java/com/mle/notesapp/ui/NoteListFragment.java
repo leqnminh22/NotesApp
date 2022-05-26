@@ -22,7 +22,6 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.mle.notesapp.R;
 import com.mle.notesapp.dependency.Dependencies;
 import com.mle.notesapp.domain.Callback;
-import com.mle.notesapp.domain.InMemoryNoteRepository;
 import com.mle.notesapp.domain.Note;
 
 import java.util.List;
@@ -166,7 +165,7 @@ public class NoteListFragment extends Fragment {
             }
         });
 
-        Dependencies.getNotesRepository(requireContext()).getAll(new Callback<List<Note>>() {
+        Dependencies.getNotesRepository().getAll(new Callback<List<Note>>() {
             @Override
             public void onSuccess(List<Note> data) {
                 adapter.setData(data); // передаем список заметок адаптеру
@@ -208,9 +207,9 @@ public class NoteListFragment extends Fragment {
 
                 progressBar.setVisibility(View.VISIBLE);
 
-                Dependencies.getNotesRepository(requireContext()).remove(selectedNote, new Callback<Note>() {
+                Dependencies.getNotesRepository().remove(selectedNote, new Callback<Void>() {
                     @Override
-                    public void onSuccess(Note data) {
+                    public void onSuccess(Void data) {
                         progressBar.setVisibility(View.GONE);
                         adapter.removeNote(selectedNote);
                         adapter.notifyItemRemoved(selectedPosition);
